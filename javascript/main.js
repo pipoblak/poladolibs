@@ -50,8 +50,12 @@ var input = $('.clockpicker').clockpicker({
           $("#btnAtivar").text("Ativar");
           $("#alarmRepeat").attr('disabled', false);
           $("#alarmRepeat").attr('checked', repeatAlarm);
-          $("#clockpicker").removeClass("hide");
-          $("#daysOfWeekHolder").removeClass("hide");
+          $("#clockpicker").fadeIn(200,function(){
+            $("#clockpicker").removeClass("hide");
+          });
+          $("#daysOfWeekHolder").fadeIn(200,function(){
+            $("#daysOfWeekHolder").removeClass("hide");
+          });
           $("#clockpicker").parents("div").closest("div").removeClass("has-success");
           $(document).find("#error-label").text("");
           isAlarmOn=false;
@@ -94,8 +98,12 @@ var input = $('.clockpicker').clockpicker({
               $("#btnAtivar").text("Desativar");
               $("#alarmRepeat").attr('disabled', true);
               $("#alarmRepeat").attr('checked', $("#alarmRepeat").is(':checked'));
-              $("#clockpicker").addClass("hide");
-              $("#daysOfWeekHolder").addClass("hide");
+              $("#clockpicker").fadeOut(200,function(){
+                $("#clockpicker").addClass("hide");
+              });
+              $("#daysOfWeekHolder").fadeOut(200,function(){
+                $("#daysOfWeekHolder").addClass("hide");
+              });
               $(document).find("#error-label").text(time);
               isAlarmOn=true;
             },
