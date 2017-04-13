@@ -75,7 +75,7 @@ var input = $('.clockpicker').clockpicker({
       time = $('#clockpicker').find("input").val();
       var hours = time.substring(0,time.indexOf(":"));
       var minutes = time.substring(time.indexOf(":")+1);
-      if(daysOfWeek.length > 0 ){
+      if(daysOfWeek.length == 6 ){
         repeatAlarm=true;
       }
       else{
