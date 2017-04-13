@@ -7,8 +7,7 @@ function pageLoad(){
     $("#datetimepicker4").closest("div").addClass("has-success");
     $(document).find("#error-label").text(targetDate);
     $(document).find("#daysOfWeekHolder").children("button").each(function(){
-      if($(document).find(event.target).attr("data-id")){
-        daysOfWeek.push($(this).attr("data-id"));
+      if(daysOfWeek.includes($(this).attr("data-id"))){
         $(this).addClass("selected");
       }
       else{
