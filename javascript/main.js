@@ -3,13 +3,12 @@ function pageLoad(){
     $("#btnAtivar").text("Desativar");
     $("#alarmRepeat").attr('disabled', true);
     $("#alarmRepeat").attr('checked', repeatAlarm);
-    $("#datetimepicker4").addClass("hide");
-    $("#datetimepicker4").closest("div").addClass("has-success");
+    $("#clockpicker").addClass("hide");
+    $("#clockpicker").parents("div").closest("div").addClass("has-success");
+    $("#daysOfWeekHolder").addClass("hide");
     $(document).find("#error-label").text(targetDate);
     $(document).find("#daysOfWeekHolder").children("button").each(function(){
-      console.log(daysOfWeek.toString());
       if(daysOfWeek.includes($(this).attr("data-id"))){
-        console.log($(this).attr("data-id"));
         $(this).addClass("selected");
       }
       else{
