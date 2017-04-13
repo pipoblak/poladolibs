@@ -1,0 +1,220 @@
+<html>
+  <head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1">
+    <title>Machine Makers Control</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+    <link rel="icon" href="https://pipoblak.github.io/poladolibs/MMlogo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://pipoblak.github.io/poladolibs/css/boostrap-datetimepicker.css" rel="stylesheet">
+    <link href="https://pipoblak.github.io/poladolibs/css/clockpicker.css" rel="stylesheet">
+    <link href="https://pipoblak.github.io/poladolibs/css/main.css" rel="stylesheet">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.5/moment-with-locales.js"></script>
+    <script type="text/javascript" src="https://pipoblak.github.io/poladolibs/javascript/bootstrap-clockpicker.min.js"></script>
+    <script type="text/javascript" src="https://pipoblak.github.io/poladolibs/javascript/starfield.js"></script>
+    <script>
+      function pageLoad(){
+        if(isAlarmOn){
+          $("#btnAtivar").text("Desativar");
+          $("#alarmRepeat").attr('disabled', true);
+          $("#alarmRepeat").attr('checked', repeatAlarm);
+          $("#datetimepicker4").addClass("hide");
+          $("#datetimepicker4").closest("div").addClass("has-success");
+          $(document).find("#error-label").text(targetDate);
+          $(document).find("#daysOfWeekHolder").children("button").each(function(){
+            if($(document).find(event.target).attr("data-id")){
+              daysOfWeek.push($(this).attr("data-id"));
+              $(this).addClass("selected");
+            }
+            else{
+              $(this).removeClass("selected");
+            }
+
+          });
+        }
+      }
+    </script>
+
+  </head>
+  <body>
+    <div class="contain" id="container">
+      <div class="conten">
+        <div style="min-height:220px; display:block;"></div>
+        <div id="alarmOptions">
+          <center>
+            <span style="color:white;">Horário do Alarme</span></br>
+            <div style="max-width:50%; margin:0 auto;">
+              <div class="clockpicker" id="clockpicker">
+                <input type="text" class="form-control datePicker">
+              </div>
+              <script type="text/javascript">
+              var input = $('.clockpicker').clockpicker({
+                  placement: 'bottom',
+                  align: 'left',
+                  autoclose: true,
+                  'default': 'now'
+              });
+              </script>
+              <label class="control-label" id="error-label"></label>
+            </div>
+            <script>
+          		var container = document.getElementById('container');
+          		var starfield = new Starfield();
+          		starfield.initialise(container);
+          		starfield.start();
+
+          		function randomise() {
+          			starfield.stop();
+          			starfield.stars = Math.random()*1000 + 50;
+          			starfield.minVelocity = Math.random()*30+5;
+          			starfield.maxVelocity = Math.random()*50 + starfield.minVelocity;
+          			starfield.start();
+          		}
+          	</script>
+            <script type="text/javascript">
+              function btnAtivar(event){
+                if(isAlarmOn){
+                  $.ajax({
+                    dataType: 'text',
+                    url : '/',
+                    data:{date:'false'},
+                    success: function(data){
+                      $("#btnAtivar").text("Ativar");
+                      $("#alarmRepeat").attr('disabled', false);
+                      $("#alarmRepeat").attr('checked', repeatAlarm);
+                      $("#clockpicker").removeClass("hide");
+                      $("#daysOfWeekHolder").removeClass("hide");
+                      $("#clockpicker").parents("div").closest("div").removeClass("has-success");
+                      $(document).find("#error-label").text("");
+                      isAlarmOn=false;
+                    },
+                    error:function(data){
+                      $("#clockpicker").parents("div").closest("div").removeClass("has-error");
+                      $("#clockpicker").parents("div").closest("div").removeClass("has-success");
+                      $("#clockpicker").parents("div").closest("div").addClass("has-error");
+                      $(document).find("#error-label").text("Houve um problema ao executar a requisição.");
+                      console.log(data);
+                    },
+                    complete: function(){
+                      setTimeout(5000);
+                    }
+                  });
+                }
+                else{
+                  var currentDate = moment();
+                  var time="";
+                  time = $('#clockpicker').find("input").val();
+                  var hours = time.substring(0,time.indexOf(":"));
+                  var minutes = time.substring(time.indexOf(":")+1);
+                  if(daysOfWeek.length > 0 ){
+                    repeatAlarm=true;
+                  }
+                  else{
+                    repeatAlarm= false;
+                  }
+                  if(time!=""){
+                    $(document).find("#error-label").slideUp(500, function(){
+                      $.ajax({
+                        dataType: 'text',
+                        url : '/',
+                        data:{
+                          hour:currentDate.hour(),minute:currentDate.minute(),second:currentDate.second(),month:(currentDate.month()+1),day:currentDate.date(),year:currentDate.year(),
+                          thours:hours,minutes,repeat:daysOfWeek.toString().replace(/\,/g,''),displaytime:time, repeatAlarm:repeatAlarm},
+                        success: function(data){
+                          $("#clockpicker").parents("div").closest("div").removeClass("has-error");
+                          $("#clockpicker").parents("div").closest("div").addClass("has-success");
+                          $("#btnAtivar").text("Desativar");
+                          $("#alarmRepeat").attr('disabled', true);
+                          $("#alarmRepeat").attr('checked', $("#alarmRepeat").is(':checked'));
+                          $("#clockpicker").addClass("hide");
+                          $("#daysOfWeekHolder").addClass("hide");
+                          $(document).find("#error-label").text(time);
+                          isAlarmOn=true;
+                        },
+                        error:function(data){
+                          $("#clockpicker").parents("div").closest("div").removeClass("has-error");
+                          $("#clockpicker").parents("div").closest("div").removeClass("has-success");
+                          $("#clockpicker").parents("div").closest("div").addClass("has-error");
+                          $(document).find("#error-label").text("Houve um problema ao executar a requisição.");
+                          console.log(data);
+                        },
+                        complete: function(){
+                          setTimeout(5000);
+                        }
+                      });
+
+                    });
+                    $(document).find("#error-label").slideDown(500);
+                  }
+                  else{
+                    event.stopPropagation();
+                    input.clockpicker('show');
+                  }
+                }
+
+              }
+
+            </script>
+            <div id="daysOfWeekHolder">
+              <button class='btnDayOfWeek' data-id='1' onclick="btnDayOfWeek(event);"> Dom </button>
+              <button class='btnDayOfWeek' data-id='2' onclick="btnDayOfWeek(event);"> Seg </button>
+              <button class='btnDayOfWeek' data-id='3' onclick="btnDayOfWeek(event);"> Ter </button>
+              <button class='btnDayOfWeek' data-id='4' onclick="btnDayOfWeek(event);"> Qua </button>
+              <button class='btnDayOfWeek' data-id='5' onclick="btnDayOfWeek(event);"> Qui </button>
+              <button class='btnDayOfWeek' data-id='6' onclick="btnDayOfWeek(event);"> Sex </button>
+              <button class='btnDayOfWeek' data-id='7' onclick="btnDayOfWeek(event);"> Sáb </button>
+            </div>
+            <script>
+              function btnDayOfWeek(event){
+                target =$(document).find(event.target);
+                if(target.hasClass('selected')){
+                  target.removeClass('selected');
+                  daysOfWeek.splice(daysOfWeek.indexOf(target.attr("data-id")),1);
+                }
+                else{
+                  target.addClass('selected');
+                  daysOfWeek.push(target.attr("data-id"));
+                }
+                var leng = daysOfWeek.length;
+                if(leng==7){
+                  $("#alarmRepeat").trigger('click');
+                }
+                else {
+                  $("#alarmRepeat").attr('checked', false);
+                }
+                daysOfWeek.sort();
+              }
+            </script>
+            <span style="color:white;font-size:09pt;" id="alarmRepeatSpan"><input type="checkbox" id="alarmRepeat" onclick="repeatAllDays(event);" style="margin-right:3px;vertical-align:middle;position:relative;top:-1px;"/><span style="bottom:-2px;position:relative;">Repetir todos os dias</span></span></br>
+            <script>
+              function repeatAllDays(event){
+                daysOfWeek=[];
+                $(document).find("#daysOfWeekHolder").children("button").each(function(){
+                  if($(document).find(event.target).is(':checked')){
+                    daysOfWeek.push($(this).attr("data-id"));
+                    $(this).addClass("selected");
+                  }
+                  else{
+                    $(this).removeClass("selected");
+                  }
+
+                });
+              }
+            </script>
+            <button class="btnAtivar" id="btnAtivar" onClick="btnAtivar(event);">Ativar</button></br>
+            <script>
+              var daysOfWeek=[1,3];
+              var isAlarmOn=false;
+              var repeatAlarm=false;
+              var targetDate="";
+              $(document).ready(pageLoad());
+            </script>
+          </center>
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
