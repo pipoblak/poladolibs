@@ -5,7 +5,6 @@ function pageLoad(){
     $("#alarmRepeat").attr('checked', repeatAlarm);
     $("#clockpicker").addClass("hide");
     $("#clockpicker").parents("div").closest("div").addClass("has-success");
-    $("#daysOfWeekHolder").addClass("hide");
     $(document).find("#error-label").text(targetDate);
     $(document).find("#daysOfWeekHolder").children("button").each(function(){
       if(daysOfWeek.includes($(this).attr("data-id"))){
