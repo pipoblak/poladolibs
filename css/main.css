@@ -1,0 +1,80 @@
+@keyframes backHolder {
+  0% {background:url("https://resources.rocketz.com.br/images/482/image/1b4477fff23c84aba8e78d544cd19ce6.png");}
+  25% {background:url("https://resources.rocketz.com.br/images/483/image/db3561263c9e2f509dc6184c1ff924fc.png")}
+  50% {background:url("https://resources.rocketz.com.br/images/484/image/d03bd1a7dc947d3aecdf08c13cf8e9d0.png")}
+  75% {background:url("https://resources.rocketz.com.br/images/485/image/660c24297384e2c1cd3e392dccbd0779.png")}
+  100% {background:url("https://resources.rocketz.com.br/images/486/image/8132ec4b73005af315345c6417ee0217.png")}
+}
+body{
+  margin:0;padding:0;
+  font-family: 'Roboto', sans-serif;
+}
+.contain{
+  min-height:100%;
+  background: linear-gradient(#00162d, #19023e);
+  position:relative;
+}
+.conten{
+  display: inline-block;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 400px !important;
+  height: 500px !important;
+  margin: auto;
+  animation-name:backHolder;
+  animation-iteration-count:infinite;
+  animation-direction:alternate;
+  animation-duration: 0.6s;
+}
+.datePicker{
+  margin-top:8px;
+  margin-bottom:8px;
+  text-align:center;
+  font-family: 'Roboto', sans-serif;
+  background:none;
+  border:none;
+  border-bottom:solid 1px #ccc;
+  color: white;
+}
+.datePicker:focus{
+  outline:none;
+  border-bottom:solid 1px orange;
+}
+.btnAtivar{
+  background:none;
+  color:white;
+  border:solid 1px white;
+  padding:8px;
+  min-width: 80px;
+  margin:16px;
+}
+.btnAtivar:hover{
+  color: orange;
+  cursor:pointer;
+}
+.btnAtivar:focus{
+  outline-color: orange;
+}
+.btnDayOfWeek{
+  border:solid 1px white;
+  background:none;
+  padding:4px;
+  color:white;
+  vertical-align:middle;
+  text-align:center;
+  font-size:08pt;
+  margin-top:8px;
+}
+.btnDayOfWeek.selected{
+  background:#6623D1 !important;
+}
+.btnDayOfWeek:focus{
+  background:#00162d;
+  outline-color:orange;
+}
+.btnDayOfWeek:hover{
+  background:#00162d;
+}
