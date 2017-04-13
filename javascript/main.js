@@ -51,8 +51,6 @@ var input = $('.clockpicker').clockpicker({
           $("#alarmRepeat").attr('checked', repeatAlarm);
           $("#clockpicker").removeClass("hide");
           $("#clockpicker").fadeIn(200);
-          $("#daysOfWeekHolder").removeClass("hide");
-          $("#daysOfWeekHolder").fadeIn(200);
           $("#clockpicker").parents("div").closest("div").removeClass("has-success");
           $(document).find("#error-label").fadeOut(200,function(){
             $(document).find("#error-label").text("");
@@ -100,10 +98,6 @@ var input = $('.clockpicker').clockpicker({
               $("#clockpicker").fadeOut(200,function(){
                 $("#clockpicker").addClass("hide");
               });
-              $("#daysOfWeekHolder").fadeOut(200,function(){
-                $("#daysOfWeekHolder").addClass("hide");
-              });
-
               $(document).find("#error-label").text(time);
               $(document).find("#error-label").fadeIn(200);
               isAlarmOn=true;
