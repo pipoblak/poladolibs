@@ -50,12 +50,10 @@ var input = $('.clockpicker').clockpicker({
           $("#btnAtivar").text("Ativar");
           $("#alarmRepeat").attr('disabled', false);
           $("#alarmRepeat").attr('checked', repeatAlarm);
-          $("#clockpicker").fadeIn(200,function(){
-            $("#clockpicker").removeClass("hide");
-          });
-          $("#daysOfWeekHolder").fadeIn(200,function(){
-            $("#daysOfWeekHolder").removeClass("hide");
-          });
+          $("#clockpicker").removeClass("hide");
+          $("#clockpicker").fadeIn(200);
+          $("#daysOfWeekHolder").removeClass("hide");
+          $("#daysOfWeekHolder").fadeIn(200);
           $("#clockpicker").parents("div").closest("div").removeClass("has-success");
           $(document).find("#error-label").text("");
           isAlarmOn=false;
