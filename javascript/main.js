@@ -88,7 +88,7 @@ var input = $('.clockpicker').clockpicker({
             url : '/',
             data:{
               hour:currentDate.hour(),minute:currentDate.minute(),second:currentDate.second(),month:(currentDate.month()+1),day:currentDate.date(),year:currentDate.year(),
-              thours:hours,minutes,repeat:daysOfWeek.toString().replace(/\,/g,''),displaytime:time, repeatAlarm:repeatAlarm},
+              thours:hours,minutes:minutes,repeat:daysOfWeek.toString().replace(/\,/g,''),displaytime:time, repeatAlarm:repeatAlarm},
             success: function(data){
               $("#clockpicker").parents("div").closest("div").removeClass("has-error");
               $("#clockpicker").parents("div").closest("div").addClass("has-success");
