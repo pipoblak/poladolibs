@@ -146,6 +146,7 @@ var input = $('.clockpicker').clockpicker({
       daysOfWeek.sort();
     }
   }
+
   function repeatAllDays(event){
     daysOfWeek=[];
     $(document).find("#daysOfWeekHolder").children("button").each(function(){
