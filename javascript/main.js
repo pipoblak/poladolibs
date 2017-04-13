@@ -55,7 +55,9 @@ var input = $('.clockpicker').clockpicker({
           $("#daysOfWeekHolder").removeClass("hide");
           $("#daysOfWeekHolder").fadeIn(200);
           $("#clockpicker").parents("div").closest("div").removeClass("has-success");
-          $(document).find("#error-label").text("");
+          $(document).find("#error-label").fadeOut(200,function(){
+            $(document).find("#error-label").text("");
+          });
           isAlarmOn=false;
         },
         error:function(data){
@@ -102,7 +104,9 @@ var input = $('.clockpicker').clockpicker({
               $("#daysOfWeekHolder").fadeOut(200,function(){
                 $("#daysOfWeekHolder").addClass("hide");
               });
+
               $(document).find("#error-label").text(time);
+              $(document).find("#error-label").fadeIn(200);
               isAlarmOn=true;
             },
             error:function(data){
