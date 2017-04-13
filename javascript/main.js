@@ -75,8 +75,7 @@ var input = $('.clockpicker').clockpicker({
       time = $('#clockpicker').find("input").val();
       var hours = time.substring(0,time.indexOf(":"));
       var minutes = time.substring(time.indexOf(":")+1);
-      console.log(daysOfWeek.length);
-      if(daysOfWeek.length == 6 ){
+      if(daysOfWeek.length == 7 ){
         repeatAlarm= true;
       }
       else{
@@ -127,23 +126,25 @@ var input = $('.clockpicker').clockpicker({
   }
 
   function btnDayOfWeek(event){
-    target =$(document).find(event.target);
-    if(target.hasClass('selected')){
-      target.removeClass('selected');
-      daysOfWeek.splice(daysOfWeek.indexOf(target.attr("data-id")),1);
+    if(!isAlarmOn){
+      target =$(document).find(event.target);
+      if(target.hasClass('selected')){
+        target.removeClass('selected');
+        daysOfWeek.splice(daysOfWeek.indexOf(target.attr("data-id")),1);
+      }
+      else{
+        target.addClass('selected');
+        daysOfWeek.push(target.attr("data-id"));
+      }
+      var leng = daysOfWeek.length;
+      if(leng==7){
+        $("#alarmRepeat").trigger('click');
+      }
+      else {
+        $("#alarmRepeat").attr('checked', false);
+      }
+      daysOfWeek.sort();
     }
-    else{
-      target.addClass('selected');
-      daysOfWeek.push(target.attr("data-id"));
-    }
-    var leng = daysOfWeek.length;
-    if(leng==7){
-      $("#alarmRepeat").trigger('click');
-    }
-    else {
-      $("#alarmRepeat").attr('checked', false);
-    }
-    daysOfWeek.sort();
   }
   function repeatAllDays(event){
     daysOfWeek=[];
