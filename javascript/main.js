@@ -170,7 +170,7 @@ var input = $('.clockpicker').clockpicker({
       url : '/alarmOn',
       success: function(data){
         if(isAlarmOn!=data){
-          location.reload();
+          console.log(isAlarmon + " is different of " + data);
         }
       },
 
