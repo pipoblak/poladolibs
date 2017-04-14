@@ -169,8 +169,9 @@ var input = $('.clockpicker').clockpicker({
       dataType: 'text',
       url : '/alarmOn',
       success: function(data){
-        if(isAlarmOn!=data){
-          console.log(isAlarmon + " is different of " + data);
+        console.log(isAlarmOn + "<ALARMON <> DATA > " + data);
+        if(isAlarmOn.toString() != data){
+
         }
       },
 
