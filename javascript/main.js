@@ -161,3 +161,15 @@ var input = $('.clockpicker').clockpicker({
 
     });
   }
+
+  setInterval(function() {
+    console.log("checking if AlarmOn changed");
+    $.ajax({
+      dataType: 'text',
+      url : '/alarmOn',
+      success: function(data){
+        console.log("alarm on > " + data);
+      },
+
+    });
+  }, 5000);
