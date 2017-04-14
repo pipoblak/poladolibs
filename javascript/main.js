@@ -1,23 +1,25 @@
 function pageLoad(){
   if(isAlarmOn){
-    $("#btnAtivar").text("Desativar");
-    $("#alarmRepeat").attr('disabled', true);
-    $("#alarmRepeat").attr('checked', repeatAlarm);
-    $("#clockpicker").addClass("hide");
-    $("#clockpicker").parents("div").closest("div").addClass("has-success");
-    $(document).find("#error-label").text(targetDate);
-    $(document).find("#daysOfWeekHolder").children("button").each(function(){
-      if(daysOfWeek.includes($(this).attr("data-id"))){
-        $(this).addClass("selected");
-      }
-      else{
-        $(this).removeClass("selected");
-      }
-
-    });
+    onAlarmOn();
   }
 }
+function onAlarmOn(){
+  $("#btnAtivar").text("Desativar");
+  $("#alarmRepeat").attr('disabled', true);
+  $("#alarmRepeat").attr('checked', repeatAlarm);
+  $("#clockpicker").addClass("hide");
+  $("#clockpicker").parents("div").closest("div").addClass("has-success");
+  $(document).find("#error-label").text(targetDate);
+  $(document).find("#daysOfWeekHolder").children("button").each(function(){
+    if(daysOfWeek.includes($(this).attr("data-id"))){
+      $(this).addClass("selected");
+    }
+    else{
+      $(this).removeClass("selected");
+    }
 
+  });
+}
 var input = $('.clockpicker').clockpicker({
     placement: 'bottom',
     align: 'left',
@@ -163,12 +165,13 @@ var input = $('.clockpicker').clockpicker({
   }
 
   setInterval(function() {
-    console.log("checking if AlarmOn changed");
     $.ajax({
       dataType: 'text',
       url : '/alarmOn',
       success: function(data){
-        console.log("alarm on > " + data);
+        if(isAlarmOn!=data){
+          location.reload();
+        }
       },
 
     });
