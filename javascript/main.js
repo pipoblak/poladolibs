@@ -22,7 +22,8 @@ var input = $('.clockpicker').clockpicker({
     placement: 'bottom',
     align: 'left',
     autoclose: true,
-    'default': 'now'
+    'default': 'now',
+    donetext: 'Aplicar'
 });
 
 
